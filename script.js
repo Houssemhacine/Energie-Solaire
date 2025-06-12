@@ -157,31 +157,28 @@ function selectMethod() {
 function selectPrevisionDataset() {
   const dataset = document.getElementById('prevision-dataset-select').value;
   const method = document.getElementById('method-select').value;
-  previsionStep = 3;
 
   window.selectedMethod = method;
-  window.selectedDataset = dataset.toUpperCase(); 
+  window.selectedDataset = dataset.toUpperCase();
 
   const displayModeSelect = document.getElementById('mode-M-select');
-  const dailyOption = Array.from(displayModeSelect.options).find(opt => opt.value === 'daily');
 
-  // Si la méthode est SARIMAX, on masque l'option "daily"
-  if (method === 'SARIMAX') {
-    if (dailyOption) dailyOption.style.display = 'none';
+  // Supprimer l'option daily si elle existe déjà
+  const existingDaily = Array.from(displayModeSelect.options).find(opt => opt.value === 'daily');
+  if (existingDaily) displayModeSelect.removeChild(existingDaily);
 
-    if (displayModeSelect.value === 'daily') {
-      displayModeSelect.value = 'monthly'; // Valeur de repli
-    }
-  } else {
-    // Sinon on affiche l'option "daily"
-    if (dailyOption) dailyOption.style.display = 'block';
+  // Ajouter "daily" seulement si ce n’est PAS SARIMAX
+  if (method !== 'SARIMAX') {
+    const newDaily = new Option('Daily', 'daily');
+    displayModeSelect.insertBefore(newDaily, displayModeSelect.options[0]); // Insérer en premier
   }
 
-  // Affichage du panneau suivant
+  // Affichage de l’étape suivante
   document.getElementById("prevision-dataset-panel").style.display = "none";
   document.getElementById("mode-M").style.display = "block";
   document.getElementById("back-button").style.display = "inline-block";
 }
+
 
 function loadMapBasedOnSelection() {
   const mode = document.getElementById('mode-M-select').value;
@@ -226,16 +223,16 @@ function displayPrevisionDataOnMap(data, mode, selectedYear) {
     // Vérification des coordonnées valides
     const lat = parseFloat(point.lat);
     let lon = parseFloat(point.lon);
-    if (lon === -0 || lon === -0.0) lon = 0; // Correction du problème de -0.0
+    if (lon === -0 || lon === -0.0) lon = 0; 
 
     if (!isFinite(lat) || !isFinite(lon) || !point.values) return;
 
     // Extraction du nom de la ville depuis la clé
-    const parts = key.split('_'); // Exemple: ["14-Ain-safra", "-0.625", "32.5"]
+    const parts = key.split('_'); 
     if (parts.length >= 3) {
-      const idAndName = parts[0]; // "14-Ain-safra"
-      const namePart = idAndName.substring(idAndName.indexOf('-') + 1); // "Ain-safra"
-      var name = namePart.replace(/-/g, ' '); // "Ain safra"
+      const idAndName = parts[0]; 
+      const namePart = idAndName.substring(idAndName.indexOf('-') + 1);
+      var name = namePart.replace(/-/g, ' ');
     } else {
           var name = `Point ${point.ID || 'N/A'}`;
        }
