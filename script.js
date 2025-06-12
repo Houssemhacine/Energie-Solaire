@@ -1133,6 +1133,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   document.getElementById('back-button').addEventListener('click', goBack);
 });
-document.getElementById("selectedYear").addEventListener("change", () => {
+document.getElementById("year-selection").addEventListener("change", () => {
   loadMapBasedOnSelection();
 });
+
