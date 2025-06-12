@@ -200,7 +200,7 @@ function loadMapBasedOnSelection() {
   }
 
   // Construction du nom de fichier à charger
-  const filename = `${window.selectedMethod.toLowerCase()}_${window.selectedDataset.toLowerCase()}_${mode.toLowerCase()}.json`;
+  const filename = `${window.selectedMethod.toLowerCase()}_${window.selectedDataset.toUpperCase()}_${mode.toLowerCase()}.json`;
 
   // Chargement des données
   fetch(filename)
