@@ -1,0 +1,418 @@
+/* Styles de base */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+
+/* Conteneur de la carte */
+#map {
+  height: 100%;
+  position: relative !important;
+  z-index: auto !important;
+}
+
+/* Styles communs pour tous les panneaux */
+.mode-panel, .dataset-panel , .mode-M , .method-panel , .validation-type-panel  , .validation-control-panel,
+.control-panel {
+  position: absolute;
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  z-index: 1000;
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+}
+
+/* Centrage des panneaux principaux */
+.mode-panel, .dataset-panel , .mode-M , .method-panel , .validation-type-panel   {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  max-width: 250px;
+  width: 80%;
+}
+
+/* Positionnement des autres panneaux */
+.control-panel , .validation-control-panel{
+  top: 80px;
+  left: 10px;
+  max-width: 130px;
+}
+
+.top-right-button {
+  
+  right: 0px;
+}
+
+/* Styles des boutons */
+button {
+  width: 67%;
+  height: 100%;
+  color: black;
+  border-radius: 30px ;
+  font-weight: 600;
+  letter-spacing: 4px ;
+  text-decoration: none;
+  transition: 0.5s ;
+  overflow: hidden;
+  backdrop-filter: blur(15px);
+}
+
+button:hover {
+  background-color: #0056b3;
+  width: 140px;
+}
+
+/* Styles des listes déroulantes */
+select {
+  padding: 10px;
+  margin-top: 5px;
+  margin-bottom: 30px;
+  border-radius: 30px;
+  border: 1px solid #ccc;
+  min-width: 100px;
+}
+
+/* Liste déroulante multiple pour la validation */
+select[multiple] {
+  min-height: 120px;
+  width: 100%;
+}
+
+/* Boutons de sélection/désélection */
+.validation-buttons {
+  margin: 10px 0;
+  text-align: center;
+}
+
+.validation-buttons button {
+  background-color: #6c757d;
+}
+
+.validation-buttons button:hover {
+  background-color: #5a6268;
+}
+
+/* Styles des popups */
+.leaflet-popup-content {
+  margin: 8px 14px !important;
+  width: auto !important;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.leaflet-popup-content-wrapper {
+  border-radius: 12px !important;
+  max-width: 750px !important;
+  padding: 1px !important;
+  
+}
+
+/* Styles spécifiques pour la validation */
+.leaflet-popup-content .error-value {
+  color: #d9534f;
+  font-weight: bold;
+}
+
+.leaflet-popup-content .month-data {
+  margin-bottom: 8px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #eee;
+}
+
+.leaflet-popup-content .avg-error {
+  background-color: #f8f9fa;
+  padding: 8px;
+  border-radius: 4px;
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+.leaflet-popup-content .coordinates {
+  margin-top: 8px;
+  font-size: 0.9em;
+  color: #666;
+}
+
+/* Adaptation pour mobile */
+@media (max-width: 768px) {
+  select[multiple] {
+    min-height: 80px;
+  }
+  
+
+  .control-panel , .validation-control-panel {
+    max-width: 250px;
+  }
+}
+
+.leaflet-popup-content {
+  min-width: 700px;
+  max-height: 800px;
+}
+
+.avg-error {
+  background-color: #f8f9fa;
+  padding: 8px;
+  border-radius: 4px;
+  margin: 10px 0;
+  font-weight: bold;
+  text-align: center;
+  font-size: 1.1em;
+}
+
+.coordinates {
+  margin: 8px 0;
+  font-size: 0.9em;
+  color: #666;
+  text-align: center;
+}
+
+/* Style pour le conteneur du graphique */
+.plotly-chart {
+  margin-top: 15px;
+  border-top: 1px solid #eee;
+  padding-top: 10px;
+}
+
+option {
+  font-weight: normal;
+  display: block;
+  padding-block-start: 0px;
+  padding-block-end: 1px;
+  min-block-size: 1.2em;
+  padding-inline: 2px;
+  white-space: nowrap;
+  text-align: center;
+}
+.top-right-button {
+  position: absolute;
+  padding: 20px;
+  border-radius: 10px;
+  z-index: 1000;
+  box-shadow: 0 0 0px rgba(0,0,0,0.2);
+  width: 120px;
+}
+
+
+.one-month-section {
+  background-color: rgba(255, 255, 255, 0.7); 
+  padding: 15px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  margin-top: 0px;
+  backdrop-filter: blur(10px);
+  margin-bottom: 15px;
+}
+
+.one-month-section label {
+  font-weight: bold;
+  color: #333;
+}
+
+.one-month-section select {
+  width: 100%;
+  padding: 6px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.one-month-section button {
+  background-color: #27ae60;
+  color: white;
+  border: none;
+  padding: 0px 0px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+  width: 100px;
+}
+
+.one-month-section button:hover {
+  background-color: #1e8449;
+}
+
+
+
+
+
+.background-image {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  background-image: url('a.jpg') !important;
+  background-size: cover !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  z-index: -1 !important;
+  filter: blur(3px) !important;
+  pointer-events: none !important;
+}
+
+body {
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+.mode-panel,
+.dataset-panel , .mode-M , .method-panel , .validation-type-panel   {
+  background-color: rgba(255, 255, 255, 0.3); 
+  background-position: center;
+  backdrop-filter: blur(10px); 
+  border-radius: 10px;
+  padding: 20px;
+  margin: 40px auto;
+  max-width: 400px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+  z-index: 1;
+
+}
+.leaflet-container {
+  background: none;
+  outline-offset: 1px;
+}
+
+
+
+#validation-cluster-filter {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+
+
+.floating-panel {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 1000; 
+  background: white;
+  padding: 15px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+  max-height: 80vh;
+  overflow-y: auto; 
+}
+
+#validation-month-select, 
+#validation-cluster-filter {
+  width: 100%;
+  margin: 5px 0;
+}
+
+.validation-buttons {
+  margin: 10px 0;
+}
+
+
+
+
+
+.validation-type {
+  background-color: rgba(255, 255, 255, 0.7);
+  padding: 15px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  margin-bottom: 15px;
+}
+
+.validation-type label {
+  font-weight: bold;
+  color: #333;
+}
+
+.validation-type select {
+  width: 100%;
+  padding: 6px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.popup-header p {
+  margin: 5px 0;
+  font-size: 0.9em;
+}
+
+.popup-header strong {
+  color: #333;
+}
+
+
+.popup-header h4 {
+  margin: 0 0 5px 0;
+  padding-bottom: 5px;
+  border-bottom: 1px solid #eee;
+}
+
+
+.info.legend {
+  line-height: 1.4;
+  color: #333;
+  font-size: 12px;
+  background: rgba(255, 255, 255, 0.3) !important;
+  backdrop-filter: blur(5px);
+  border: 1px solid #ddd !important;
+  transition: all 0.3s ease;
+  max-width: 85px;
+}
+
+.info.legend h4 {
+  margin: 5px 0;
+  padding: 0;
+  font-size: 13px;
+  font-weight: bold;
+  text-align: center;
+  color: #2c3e50;
+}
+
+.info.legend .legend-content {
+  transition: all 0.3s ease;
+}
+
+.info.legend .legend-toggle {
+  transition: all 0.3s ease;
+  width: 80px;
+  position: relative !important;
+}
+
+.info.legend .legend-toggle:hover {
+  color: #007bff;
+}
+
+@media (max-width: 768px) {
+  .info.legend {
+    max-width: 85px;
+    font-size: 11px;
+  }
+  
+  .info.legend h4 {
+    font-size: 12px;
+  }
+}
+
+
+
+.prevision-dataset-panel {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(10px);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+  z-index: 1000;
+  text-align: center;
+  max-width: 250px;
+  width: 80%;
+}

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title id="page-title">Carte Interactive SWG</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+<body>
+  <div class="background-image" id="background-image"></div>
+
+  <!-- Choix du mode (Analyse ou Validation) -->
+  <div class="mode-panel" id="mode-panel">
+    <h3>Choose DATA mode</h3>
+    <select id="mode-select">
+      <option value="analysis">Analysis</option>
+      <option value="validation">Validation and estimation</option>
+            <option value="prevision">Prevision</option>
+
+    </select><br>
+    <button onclick="selectMode()">Valid</button>
+  </div>
+  <div class="validation-type-panel" id="validation-type-panel" style="display:none;">
+    <h3>DataCheck type</h3>
+    <select id="validation-type-select">
+      <option value="comparison">Validation (Comparison)</option>
+      <option value="estimation">Actual estimate</option>
+    </select><br>
+    <button onclick="selectValidationType()">Valid</button>
+  </div>
+
+  <!-- Panneau Analyse des données -->
+  <div class="dataset-panel" id="dataset-panel" style="display:none;">
+    <h3>Choose Dataset</h3>
+    <select id="dataset-select">
+      <option value="swgdn">SWGDN</option>
+      <option value="swgdnclr">SWGDNCLR</option>
+      <option value="swgnt">SWGNT</option>
+    </select><br>
+    <button onclick="initMap()">valid</button>
+  </div>
+  
+  <!-- Panneau Prevision des données -->
+  <div class="method-panel" id="method-panel" style="display:none;">
+    <h3>Choose Method</h3>
+    <select id="method-select">
+      <option value="SARIMAX">SARIMAX</option>
+      <option value="lstm">LSTM</option>
+      <option value="xgboost">XGBOOST</option>
+    </select><br>
+    <button onclick="selectMethod()">valid</button>
+  </div>
+
+
+   <div class="prevision-dataset-panel" id="prevision-dataset-panel" style="display:none;">
+      <h3>Choose Dataset</h3>
+      <select id="prevision-dataset-select">
+        <option value="SWGDN">SWGDN</option>
+        <option value="SWGDNCLR">SWGDNCLR</option>
+        <option value="SWGNT">SWGNT</option>
+      </select><br>
+      <button onclick="selectPrevisionDataset()">valid</button>
+    </div>
+
+
+  <!-- Panneau de contrôle (prevision) -->
+  <div class="mode-M" id="mode-M" style="display:none;">
+    <label>Display Mode :</label><br>
+    <select id="mode-M-select">
+      <option value="daily">Daily</option>
+      <option value="weekly">Weekly</option>
+      <option value="monthly">Monthly</option>
+    </select><br>
+      <label>Choose Year:</label><br>
+      <select id="year-selection">
+        <option value="all">All</option>
+        <option value="2025">2025</option>
+        <option value="2026">2026</option>
+      </select><br>
+    <button onclick="loadMapBasedOnSelection()">valid</button>
+  </div>
+
+
+
+
+  <!-- Panneau Validation des données -->
+  <div class="validation-control-panel" id="validation-control-panel" style="display:none;">
+    <label>Selected Months :</label><br>
+    <select id="validation-month-select" multiple size="6"></select><br>
+    <div class="validation-buttons">
+      <button onclick="selectAllMonths()">All selected</button>
+      <button onclick="deselectAllMonths()">All deselected</button>
+    </div><br>
+              <!-- Filtrage des clusters validation-->
+              <label>Filter by Clusters:</label><br>
+              <select id="validation-cluster-filter" multiple>
+                <option value="all">Tous</option>
+                <option value="1">Cluster 1</option>
+                <option value="2">Cluster 2</option>
+                <option value="3">Cluster 3</option>
+                <option value="4">Cluster 4</option>
+                <option value="5">Cluster 5</option>
+                <option value="6">Cluster 6</option>
+                <option value="7">Cluster 7</option>
+                <option value="8">Cluster 8</option>
+                <option value="9">Cluster 9</option>
+              </select><br><br>
+            
+  </div>
+
+  <!-- Panneau de contrôle (analyse) -->
+  <div class="control-panel" id="control-panel" style="display:none;">
+    <label>Display Mode :</label><br>
+    <select id="mode">
+      <option value="all_months">All Months</option>
+      <option value="select_months">Choose Months</option>
+      <option value="one_month">Only month</option>
+    </select><br><br>
+
+    <div id="select-months-container">
+      <label>Months to display:</label><br>
+      <select id="months-select" multiple size="6"></select><br><br>
+         
+    </div>
+
+   
+
+    <div id="one-month-container" class="one-month-section">
+      <label>Select a Month :</label><br>
+      <select id="one-month-select"></select><br><br>
+      <button onclick="analyzeSingleMonth()">Analyze this month</button>
+    </div>
+
+    <!-- Filtrage des clusters -->
+    <label>Filter by Clusters:</label><br>
+    <select id="cluster-filter" multiple>
+      <option value="all">Tous</option>
+      <option value="1">Cluster 1</option>
+      <option value="2">Cluster 2</option>
+      <option value="3">Cluster 3</option>
+      <option value="4">Cluster 4</option>
+      <option value="5">Cluster 5</option>
+      <option value="6">Cluster 6</option>
+      <option value="7">Cluster 7</option>
+      <option value="8">Cluster 8</option>
+      <option value="9">Cluster 9</option>
+      <option value="10">Cluster 10</option>
+    </select>
+  </div>
+
+
+  <!-- Bouton pour recharger la page -->
+  <div class="top-right-button" id="reload-button" style="display:none;">
+    <button onclick="location.reload()"> Menu </button>
+    <button id="back-button" onclick="goBack()" style="margin-left: -10px;"> Back </button>
+  </div>
+
+  <!-- Carte -->
+  <div id="map"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
