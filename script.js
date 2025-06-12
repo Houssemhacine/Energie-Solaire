@@ -160,7 +160,7 @@ function selectPrevisionDataset() {
   previsionStep = 3;
 
   window.selectedMethod = method;
-  window.selectedDataset = dataset;
+  window.selectedDataset = dataset.toUpperCase(); 
 
   const displayModeSelect = document.getElementById('mode-M-select');
   const dailyOption = Array.from(displayModeSelect.options).find(opt => opt.value === 'daily');
