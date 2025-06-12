@@ -25,6 +25,7 @@ function selectMode() {
     document.getElementById("validation-type-panel").style.display = "block";
   }else if (mode === "prevision") {
     document.getElementById("method-panel").style.display = "block";
+    previsionStep = 1;
 }
 }
 
@@ -97,18 +98,27 @@ function goBack() {
     document.getElementById("back-button").style.display = "none";
     document.getElementById("validation-type-panel").style.display = "block";
   } else if (mode === "prevision") {
-    document.getElementById("mode-panel").style.display = "none";
-    if (previsionStep === 3) {
+    
+    if (previsionStep === 4) {
       document.getElementById("mode-M").style.display = "block";
       document.getElementById("back-button").style.display = "inline-block";
+      previsionStep = 3;
+    }else if (previsionStep === 3) {
+      document.getElementById("mode-M").style.display = "block";
+      document.getElementById("back-button").style.display = "inline-block";
+      previsionStep = 2;
+       
     } else if (previsionStep === 2) {
       document.getElementById("prevision-dataset-panel").style.display = "block";
       document.getElementById("back-button").style.display = "inline-block";
+      previsionStep = 1;
+      
     } else if (previsionStep === 1) {
-      document.getElementById("method-panel").style.display = "block";
-      document.getElementById("back-button").style.display = "none";
+      document.getElementById("prevision-dataset-panel").style.display = "block";
+      document.getElementById("back-button").style.display = "inline-block";
+      previsionStep = 0;
     } else {
-      document.getElementById("mode-panel").style.display = "block";
+      document.getElementById("method-panel").style.display = "block";
       document.getElementById("back-button").style.display = "none";
     }
   }
@@ -138,7 +148,7 @@ function deselectAllMonths() {
 
 function selectMethod() {
   const method = document.getElementById('method-select').value;
-  previsionStep = 1;
+  previsionStep = 2;
   document.getElementById("method-panel").style.display = "none";
   document.getElementById("prevision-dataset-panel").style.display = "block";
   document.getElementById("back-button").style.display = "inline-block";
@@ -147,6 +157,7 @@ function selectMethod() {
 function selectPrevisionDataset() {
   const dataset = document.getElementById('prevision-dataset-select').value;
   const method = document.getElementById('method-select').value;
+  previsionStep = 3;
 
   window.selectedMethod = method;
   window.selectedDataset = dataset;
@@ -175,7 +186,7 @@ function selectPrevisionDataset() {
 function loadMapBasedOnSelection() {
   const mode = document.getElementById('mode-M-select').value;
   const selectedYear = document.getElementById('year-selection').value;
-  previsionStep = 3;
+  previsionStep = 4;
   document.getElementById('mode-M').style.display = 'none';
   document.getElementById("back-button").style.display = "inline-block";
 
