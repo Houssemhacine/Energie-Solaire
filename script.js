@@ -168,7 +168,7 @@ function selectPrevisionDataset() {
   if (existingDaily) displayModeSelect.removeChild(existingDaily);
 
   // Ajouter "daily" seulement si ce n’est PAS SARIMAX
-  if (method !== 'SARIMAX') {
+  if (method !== 'sarimax') {
     const newDaily = new Option('Daily', 'daily');
     displayModeSelect.insertBefore(newDaily, displayModeSelect.options[0]); // Insérer en premier
   }
