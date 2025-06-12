@@ -159,25 +159,25 @@ function selectPrevisionDataset() {
   const method = document.getElementById('method-select').value;
 
   window.selectedMethod = method;
-  window.selectedDataset = dataset.toUpperCase();
+  window.selectedDataset = dataset.toUpperCase(); 
 
   const displayModeSelect = document.getElementById('mode-M-select');
+  const dailyOption = Array.from(displayModeSelect.options).find(opt => opt.value === 'daily');
 
-  // Supprimer l'option daily si elle existe déjà
-  const existingDaily = Array.from(displayModeSelect.options).find(opt => opt.value === 'daily');
-  if (existingDaily) displayModeSelect.removeChild(existingDaily);
-
-  // Ajouter "daily" seulement si ce n’est PAS SARIMAX
-  if (method !== 'sarimax') {
-    const newDaily = new Option('Daily', 'daily');
-    displayModeSelect.insertBefore(newDaily, displayModeSelect.options[0]); // Insérer en premier
+  if (method === 'SARIMAX') {
+    if (dailyOption) dailyOption.style.display = 'none';
+    if (displayModeSelect.value === 'daily') {
+      displayModeSelect.value = 'monthly';
+    }
+  } else {
+    if (dailyOption) dailyOption.style.display = 'block';
   }
 
-  // Affichage de l’étape suivante
   document.getElementById("prevision-dataset-panel").style.display = "none";
   document.getElementById("mode-M").style.display = "block";
   document.getElementById("back-button").style.display = "inline-block";
 }
+
 
 
 function loadMapBasedOnSelection() {
