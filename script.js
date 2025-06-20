@@ -526,10 +526,16 @@ function processEstimationData(selectedMonths, selectedClusters = ['all'], regre
     hasOriginalData = originalPoint && selectedMonths.some(month => 
       originalPoint.values[month] !== undefined
     );
-    const villeName =
-      originalPoint
-       ? originalPoint.name || originalPointKey
-       : key.split('-').slice(1).join('-').split('_').slice(0, -2).join('_');
+    const villeName = (() => {
+      if (originalPoint) return originalPoint.name || originalPointKey;
+  
+      const dashSplit = key.split('-');
+      dashSplit.shift(); 
+      const nameWithUnderscore = dashSplit.join('-');
+      const underscoreParts = nameWithUnderscore.split('_');
+      return underscoreParts.slice(0, -2).join('_'); 
+    })();
+
     
     selectedMonths.forEach(month => {
       const transVal = transPoint.values[month];
