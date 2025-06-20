@@ -2,7 +2,7 @@ let pointURL, ecartURL;
 let pointData, ecartData, allMonths = [];
 let validationOriginalData, validationTransmitanceData;
 let map;
-const markerLayer = L.layerGroup();
+const markerLayer = L.featureGroup();
 let datasetName = "SWGDN";
 let currentMode = "";
 let previsionStep = 0;
