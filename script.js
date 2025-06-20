@@ -551,7 +551,7 @@ function processEstimationData(selectedMonths, selectedClusters = ['all'], regre
       
       let popupContent = `
         <div class="popup-header">
-          <h4>Ville: <span style="color:#007bff">${originalPointKey}</span> ${pointType}</h4>
+          <h4>Ville: <span style="color:#007bff">${originalPoint?.name || originalPointKey}</span> ${pointType}</h4>
           <p><strong>Coordonnées:</strong> ${transPoint.lat.toFixed(4)}, ${transPoint.lon.toFixed(4)}</p>
           <p><strong>Cluster:</strong> ${cluster}</p>
           <p><strong>R² du cluster:</strong> ${r2.toFixed(4)}</p>
